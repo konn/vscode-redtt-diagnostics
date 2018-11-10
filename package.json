@@ -35,19 +35,7 @@
     "configurationDefaults": {
       "files.exclude": {
         "*.rot": true
-      },
-      "lean.input.customTranslations": {
-        "II": "𝕀",
-        "dim": "𝕀",
-        "<:": "⦉",
-        ":>": "⦊",
-        "<|": "⦉",
-        "|>": "⦊"
-      },
-      "lean.input.languages": [
-        "lean",
-        "redtt"
-      ]
+      }
     }
   },
   "extensionDependencies": [
