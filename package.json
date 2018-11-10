@@ -1,0 +1,70 @@
+{
+  "name": "redtt-diagnostics",
+  "displayName": "redtt diagnostics",
+  "description": "Diagnostics for the redtt Proof Assistant",
+  "version": "0.0.1",
+  "publisher": "mr-konn",
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:redtt"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "configuration": [
+      {
+        "title": "Redtt Diagnostics",
+        "properties": {
+          "redtt.executable": {
+            "type": "string",
+            "markdownDescription": "Path to `redtt` executable",
+            "default": "redtt"
+          },
+          "redtt.diagnostics.onChange": {
+            "type": "boolean",
+            "markdownDescription": "Run `redtt` on unsaved contents",
+            "default": false
+          }
+        }
+      }
+    ],
+    "configurationDefaults": {
+      "files.exclude": {
+        "*.rot": true
+      },
+      "lean.input.customTranslations": {
+        "II": "𝕀",
+        "dim": "𝕀",
+        "<:": "⦉",
+        ":>": "⦊",
+        "<|": "⦉",
+        "|>": "⦊"
+      },
+      "lean.input.languages": [
+        "lean",
+        "redtt"
+      ]
+    }
+  },
+  "extensionDependencies": [
+    "agryzlov.redtt"
+  ],
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.21",
+    "tslint": "^5.8.0",
+    "@types/node": "^8.10.25",
+    "@types/mocha": "^2.2.42"
+  }
+}
