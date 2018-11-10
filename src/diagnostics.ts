@@ -64,7 +64,7 @@ export default class RedttProvider implements Disposable {
           let msg: RegExpExecArray | null;
           let lines = "Unknown Notice";
           const rest = stdout.slice(regex.lastIndex + 1);
-          if ((msg = /(^  (.+?)\n)+/gm.exec(rest))) {
+          if ((msg = /(^  (.*?)\n)+/gm.exec(rest))) {
             lines = msg[0];
           }
           console.log(JSON.stringify([rest, lines]));
