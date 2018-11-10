@@ -17,13 +17,5 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(provider);
 }
 
-export function onChange() {
-  let editor = window.activeTextEditor;
-  if (editor) {
-    let document = editor.document;
-    console.log(`Changed: ${document.uri}`);
-  }
-}
-
 // this method is called when your extension is deactivated
 export function deactivate() {}
