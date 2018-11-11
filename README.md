@@ -2,8 +2,8 @@
 
 This extension adds a diagnostic functionality for [`redtt`] theorem prover.
 
-## Future Plan
+You can also input Unicode symbols using LaTeX-like command and shape abbreviations.
 
-- Unicode Math Input like Lean mode
+For example, you can type `\II` to input `𝕀` and `\to` to `→`.
 
 [`redtt`]: https://github.com/RedPRL/redtt
