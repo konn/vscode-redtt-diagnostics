@@ -2,7 +2,7 @@
   "name": "redtt-diagnostics",
   "displayName": "redtt diagnostics",
   "description": "Diagnostics for the redtt Proof Assistant",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "mr-konn",
   "repository": {
     "type": "git",
@@ -43,7 +43,8 @@
     }
   },
   "extensionDependencies": [
-    "agryzlov.redtt"
+    "agryzlov.redtt",
+    "mr-konn.generic-input-method"
   ],
   "scripts": {
     "vscode:prepublish": "npm run compile",
