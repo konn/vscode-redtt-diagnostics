@@ -9,7 +9,7 @@ Small cheatsheet for frequently used symbols:
 | Command | Symbol |
 | :-----: | :----: |
 | `\II`   | `𝕀`   |
-| `\to`   | `→`    |
+| `\->`   | `→`    |
 | `\Gl`   | `λ`    |
 | `\#`    | `★`    |
 | `\x`    | `×`    |
