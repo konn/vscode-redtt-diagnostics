@@ -6,15 +6,15 @@ You can also input Unicode symbols using LaTeX-like command and shape abbreviati
 
 Small cheatsheet for frequently used symbols:
 
-|Command|Symbol| 
-|:-----:|:----:| 
-|`\II`  |`𝕀`   | 
-|`\to`  |`→`   |
-|`\Gl`  |`λ`   |
-|`\#`   |`★`   |
-|`\x`   |`×`   |
-|`\6`   |`∂`   |
-|`\|-`  |`⊢`   |
-|`\GO`  |`Ω`   |
+| Command | Symbol |
+| :-----: | :----: |
+| `\II`   | `𝕀`   |
+| `\to`   | `→`    |
+| `\Gl`   | `λ`    |
+| `\#`    | `★`    |
+| `\x`    | `×`    |
+| `\6`    | `∂`    |
+| `\\|-`  | `⊢`    |
+| `\GO`   | `Ω`    |
 
 [`redtt`]: https://github.com/RedPRL/redtt
