@@ -2,7 +2,7 @@
   "name": "redtt-diagnostics",
   "displayName": "redtt diagnostics",
   "description": "Diagnostics for the redtt Proof Assistant",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "mr-konn",
   "repository": {
     "type": "git",
@@ -46,6 +46,9 @@
     "agryzlov.redtt",
     "mr-konn.generic-input-method"
   ],
+  "dependencies": {
+    "event-stream": "3.3.4"
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
