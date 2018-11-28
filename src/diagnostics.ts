@@ -43,55 +43,58 @@ export default class RedttProvider implements Disposable {
       ["load-file", document.fileName],
       options
     );
-    let stdout = "";
-    let stderr = "";
+    let input = "";
     if (redtt.pid) {
-      redtt.stdout.on("data", input => (stdout += input));
-      redtt.stderr.on("data", input => (stderr += input));
+      redtt.stdout.on("data", i => (input += i));
+      redtt.stderr.on("data", i => (input += i));
       redtt.on("close", (code, _sig) => {
         const diagnostics: Diagnostic[] = [];
         // Do Something
-        let regex = /^(.+):(\d+)\.(\d+)-(\d+)\.(\d+) \[(Info|Warn|Error)\]:$/gm;
+        let regex = /^(((.+):(\d+)\.(\d+)-(\d+)\.(\d+) \[(Info|Warn|Error)\]:)|(\s*\(Failure\s+(".+")\)))$/gm;
         let pos: RegExpExecArray | null;
-        while ((pos = regex.exec(stdout))) {
-          let path = pos[1];
-          let startLine = Number(pos[2]);
-          let startCol = Number(pos[3]);
-          let endLine = Number(pos[4]);
-          let endCol = Number(pos[5]);
-          let severity = parseSeverity(pos[6]);
-          let range = new Range(startLine - 1, startCol, endLine - 1, endCol);
-          let msg: RegExpExecArray | null;
-          let lines = "Unknown Notice";
-          const rest = stdout.slice(regex.lastIndex + 1);
-          if ((msg = /(^  (.*?)\n)+/gm.exec(rest))) {
-            lines = msg[0];
-          }
-          console.log(JSON.stringify([rest, lines]));
-          let d = new Diagnostic(range, lines.replace(/^  /gm, ""), severity);
-          if (path === document.fileName) {
+
+        while ((pos = regex.exec(input))) {
+          if (pos[2]) {
+            let path = pos[3];
+            let startLine = Number(pos[4]);
+            let startCol = Number(pos[5]);
+            let endLine = Number(pos[6]);
+            let endCol = Number(pos[7]);
+            let severity = parseSeverity(pos[8]);
+            let range = new Range(startLine - 1, startCol, endLine - 1, endCol);
+
+            let msg: RegExpExecArray | null;
+            let lines = "Unknown Notice";
+            const rest = input.slice(regex.lastIndex + 1);
+
+            if ((msg = /(^  (.*?)\n)+/gm.exec(rest))) {
+              lines = msg[0];
+            }
+            let d = new Diagnostic(range, lines.replace(/^  /gm, ""), severity);
+            if (path === document.fileName) {
+              diagnostics.push(d);
+            }
+          } else {
+            const msg = JSON.parse(pos[10]);
+            let range = new Range(0, 0, 0, 0);
+            let matched: RegExpMatchArray | null;
+            if ((matched = msg.match(/^Could not resolve variable: (.+?)$/))) {
+              const varName = matched[1];
+              const re = new RegExp(`\\b${escapeRegExp(varName)}\\b`);
+              const pos = document.getText().match(re);
+              console.log("Variable: " + varName);
+              if (pos && pos.index) {
+                const start = document.positionAt(pos.index);
+                const end = new Position(
+                  start.line,
+                  start.character + varName.length
+                );
+                range = new Range(start, end);
+              }
+            }
+            let d = new Diagnostic(range, msg, DiagnosticSeverity.Error);
             diagnostics.push(d);
           }
-        }
-        let internalError = /^(?!\s*Check(ed|ing)|$)/m;
-        if ((pos = internalError.exec(stderr))) {
-          let msg = stderr.slice(pos.index);
-          let range = new Range(0, 0, 0, 0);
-          let result = /Failure\s+"Could not resolve variable: (.+?)"/.exec(
-            msg
-          );
-          if (result) {
-            const ident = result[1];
-            const offset = document.getText().indexOf(ident);
-            const start = document.positionAt(offset);
-            const end = new Position(
-              start.line,
-              start.character + ident.length
-            );
-            range = new Range(start, end);
-          }
-          let d = new Diagnostic(range, msg, DiagnosticSeverity.Error);
-          diagnostics.push(d);
         }
         this.collection.set(document.uri, diagnostics);
       });
@@ -115,4 +118,8 @@ function parseSeverity(kind: string): DiagnosticSeverity {
   } else {
     return DiagnosticSeverity.Information;
   }
+}
+
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^=!:${}()|[\]\/\\]/g, "\\$&");
 }
