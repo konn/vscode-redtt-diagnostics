@@ -1,7 +1,11 @@
 # Change Log
-All notable changes to the "redtt-diagnosis" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+## [0.0.5] - 2018-11-28
 
-## [Unreleased]
-- Initial release
+### Fixed
+
+- Fixes an incorrect parsing error position report (Fixes #2)
+
+## [0.0.4] - 2018-11-27
+
+- Workaround for `event-stream` vulnerability
