@@ -47,7 +47,8 @@
     "mr-konn.generic-input-method"
   ],
   "dependencies": {
-    "event-stream": "3.3.4"
+    "event-stream": ">= 3.3.4",
+    "tar": ">=4.4.2"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
