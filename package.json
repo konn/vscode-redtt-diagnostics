@@ -48,7 +48,8 @@
   ],
   "dependencies": {
     "event-stream": ">= 3.3.4",
-    "tar": ">=4.4.2"
+    "tar": ">=4.4.2",
+    "querystringify": "~>2.0.0"
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
